@@ -43,9 +43,9 @@ public class Scene extends JPanel{
 	
 	//random values for random postions of les tuyaux
 	private Random random;
-	private int r1 = new Random().nextInt((300 - 150) + 1) + 100;
-	private int r2 = new Random().nextInt((300 - 150) + 1) + 100;
-	private int r3 = new Random().nextInt((300 - 150) + 1) + 100;
+	private int r1; 
+	private int r2 ;
+	private int r3 ;
 	
 	//constructeur 
 	public Scene() {
@@ -59,6 +59,10 @@ public class Scene extends JPanel{
 		this.xFond = 0;
 		this.xTuyaux = 300; 
 		this.finDuJeu = false;
+		
+		r1 =new Random().nextInt((300 - 150) + 1) + 100;
+		r2 = new Random().nextInt((300 - 150) + 1) + 100;
+		r3 = new Random().nextInt((300 - 150) + 1) + 100;
 	
 		
 		this.score = 0;
@@ -88,7 +92,6 @@ public class Scene extends JPanel{
 		Thread chronoEcran = new Thread(new Chrono ());
 		chronoEcran.start();
 	}
-	
 	
 	//methodes 
 	
@@ -179,7 +182,26 @@ public class Scene extends JPanel{
 			 this.score ++; 
 		 }
 	}
+			
+	public void playAgain() {
+		this.finDuJeu = false;
+		//reinitialiser les valeurs
+		this.xFond = 0;
+		this.xTuyaux = 300; 
+		this.finDuJeu = false;
+	
+		this.score = 0;
 		
+		this.tuyauBas1.setX(xTuyaux);this.tuyauHaut1.setX(this.tuyauBas1.getX());
+		this.tuyauBas2.setX(this.xTuyaux +this.DISTANCE_TUYAUX);this.tuyauHaut2.setX(this.tuyauBas2.getX());
+		this.tuyauBas3.setX(this.xTuyaux +this.DISTANCE_TUYAUX * 2);this.tuyauHaut3.setX(this.tuyauBas3.getX());
+		
+		this.flappyBird.setX(100);this.flappyBird.setY(150);
+		
+		Thread chronoEcran = new Thread(new Chrono ());
+		chronoEcran.start();
+		
+	}
 
 	
 	public void paintComponent(Graphics g) {
@@ -193,6 +215,7 @@ public class Scene extends JPanel{
 		this.deplacementFlappy(g);
 		if(this.finDuJeu) {
 			g.drawString("Fin du jeu", 60, 200);
+			g.drawString("space to replay", 10, 250);
 			Audio.playSound("/Audio/choc.wav");
 		}
 	}

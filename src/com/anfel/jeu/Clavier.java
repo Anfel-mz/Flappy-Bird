@@ -11,6 +11,10 @@ public class Clavier implements KeyListener {
 			main.scene.flappyBird.monte();
 			Audio.playSound("/Audio/battementAile.wav");
 		}
+		//rejouer sans quitter
+		if((e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP) && main.scene.getFinDuJeu()) {
+			main.scene.playAgain();
+		}
 	}
 
 	

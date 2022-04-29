@@ -1,7 +1,5 @@
 package com.anfel.jeu;
-
 import java.util.function.Function;
-
 import javax.swing.JFrame;
 
 
