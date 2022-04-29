@@ -6,11 +6,11 @@ public class Chrono implements Runnable{
 	
 	@Override
 	public void run() {
-		while (true) {
-			main.scene.decrXFond();
-			main.scene.repaint(); //repaint appelle la methode paintComponent
+		while (!main.scene.getFinDuJeu()) {
+			main.scene.decrXFond(); //to move le fond
+			main.scene.repaint(); //repaint appelle la methode paintComponent donc on re dessine tous avec des nouveaux coordonnées 
 			try { 
-				Thread.sleep(this.PAUSE);
+				Thread.sleep(this.PAUSE); //to slow down the loop process
 			} catch (InterruptedException e) { }
 		}
 		

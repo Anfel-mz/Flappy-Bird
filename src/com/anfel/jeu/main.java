@@ -1,6 +1,9 @@
 package com.anfel.jeu;
 
+import java.util.function.Function;
+
 import javax.swing.JFrame;
+
 
 public class main {
 	
@@ -26,6 +29,13 @@ public class main {
 		
 		
 		
+		
 	}
+	
+	
 
+	
+	
+		
+	
 }

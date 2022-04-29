@@ -7,8 +7,9 @@ public class Clavier implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+		if((e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP) && !main.scene.getFinDuJeu()) {
 			main.scene.flappyBird.monte();
+			Audio.playSound("/Audio/battementAile.wav");
 		}
 	}
 

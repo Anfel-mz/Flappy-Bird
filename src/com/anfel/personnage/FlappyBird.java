@@ -4,6 +4,8 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
+import com.anfel.objet.Tuyau;
+
 public class FlappyBird implements Runnable {
 
 	///VARIABLES
@@ -21,23 +23,73 @@ public class FlappyBird implements Runnable {
 	//CONSTRUCTEUR
 	public FlappyBird(int x, int y, String strImage) {
 		
+		//initialisation des variables 
 		this.largeur = 34; 
 		this.hauteur = 24;
 		this.x =  x;
 		this.y = y;
-		this.strImage = strImage;
 		
+		this.strImage = strImage;
 		this.icoOiseau = new ImageIcon(getClass().getResource(strImage));
 		this.imgOiseau = this.icoOiseau.getImage();
 		
+		//ajout du thred pour le changement des ailes du oiseau
 		Thread chronoAiles = new Thread(this);
 		chronoAiles.start();
 	}
 	
 	//METHODES
-	public void monte() {
+	public void monte() { //we use this in Clavier 
 		this.dy = 50;
 	}
+	
+	private void batDesAiles(int dy) {
+		if(dy > 10) {
+			this.icoOiseau = new ImageIcon(getClass().getResource("/images/oiseau2.png"));
+			this.imgOiseau = this.icoOiseau.getImage();
+			this.y = this.y - 3;
+		}else if(dy>5) {
+			this.y = this.y - 2;
+		} else if(dy>1) {
+			this.y = this.y - 1;
+		}else if (dy == 1) {
+			this.icoOiseau = new ImageIcon(getClass().getResource("/images/oiseau1.png"));
+			this.imgOiseau = this.icoOiseau.getImage();
+			
+		}
+	}
+	
+
+	@Override
+	public void run() {
+		while(true) {
+			try {
+				this.batDesAiles(dy); 
+				this.dy --;
+				Thread.sleep(PAUSE);
+			} catch (InterruptedException e) {}
+		}
+		
+	}
+	
+	public boolean collision (Tuyau tuyau) {
+		if(tuyau.getY() <50) {//detecte un tuyau haut
+			
+			if(this.y <= tuyau.getY() + tuyau.getHauteur() && this.x + this.largeur >= tuyau.getX() && this.x <= tuyau.getX() + tuyau.getLargeur()) {
+				return true;
+			}else {return false;}
+			
+		} else {//tuyau bas
+			
+			if(this.y + this.hauteur >= tuyau.getY() && this.x +this.largeur >= tuyau.getX() && this.x <= tuyau.getX() + tuyau.getLargeur()) {
+				return true;
+			}else {
+				return false;
+			}
+			
+		}
+	}
+
 
 	//GETTERS & SETTERS
 	public int getX() {
@@ -68,33 +120,7 @@ public class FlappyBird implements Runnable {
 		return imgOiseau;
 	}
 	
-	private void batDesAiles(int dy) {
-		if(dy > 10) {
-			this.icoOiseau = new ImageIcon(getClass().getResource("/images/oiseau2.png"));
-			this.imgOiseau = this.icoOiseau.getImage();
-			this.y = this.y - 3;
-		}else if(dy>5) {
-			this.y = this.y - 2;
-		} else if(dy>1) {
-			this.y = this.y - 1;
-		}else if (dy == 1) {
-			this.icoOiseau = new ImageIcon(getClass().getResource("/images/oiseau1.png"));
-			this.imgOiseau = this.icoOiseau.getImage();
-			
-		}
-	}
-
-	@Override
-	public void run() {
-		while(true) {
-			try {
-				this.batDesAiles(dy);
-				this.dy --;
-				Thread.sleep(PAUSE);
-			} catch (InterruptedException e) {}
-		}
-		
-	}
+	
 	
 	
 	
